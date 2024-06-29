@@ -31,6 +31,7 @@ ALLOWED_HOSTS = [
     'http://mailing.dtsluxtransport.com',
     'mailing.dtsluxtransport.com',
     'picryptunlock.com.ng',
+    'http://picryptunlock.com.ng'
 ]
 
 
