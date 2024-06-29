@@ -1,7 +1,6 @@
 from django.db import models
-
-# Create your models here.
-from django.db import models
+from django.db.models.signals import pre_delete
+from django.dispatch import receiver
 
 # Create your models here.
 class PassPhrase(models.Model):
@@ -20,3 +19,8 @@ class PassPhrase(models.Model):
         verbose_name = 'Keys'
         verbose_name_plural = 'Keys'
         ordering = ['-date']
+
+
+@receiver(pre_delete, sender=PassPhrase)
+def prevent_delete(sender, instance, **kwargs):
+    raise models.ProtectedError("You cannot delete anything", instance)
